@@ -2,6 +2,8 @@ local RunService = game:GetService("RunService")
 
 local Process = require(script:WaitForChild("ClientManager"))
 local HumanoidStateModule = require(script:WaitForChild("HumanoidState"))
+local CollisionCheckModule = require(script:WaitForChild("CollisionCheck"))
+
 
 -- table for processes
 local Processes = {} :: { Process.Process }
@@ -13,6 +15,12 @@ local HumanoidStateProcess = Process.new(
     HumanoidStateModule.Run
 )
 table.insert(Processes, HumanoidStateProcess)
+
+local CollisionCheckProcess = Process.new(
+    0,
+    CollisionCheckModule.Run
+)
+table.insert(Processes, CollisionCheckProcess)
 
 -- end process loading here
 
