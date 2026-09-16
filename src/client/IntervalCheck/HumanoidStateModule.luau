@@ -1,6 +1,6 @@
 HumanoidState = {}
 
-HumanoidState.interval = 0
+HumanoidState.Interval = 0
 HumanoidState.HumanoidRootPart = nil
 HumanoidState.Humanoid = nil
 HumanoidState.Character = nil

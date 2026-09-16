@@ -3,7 +3,8 @@ Process.__index = Process
 
 export type Process = typeof(setmetatable({} :: {
     Interval: number,
-    Run: () -> ()
+    Run: () -> (),
+    LastRun: number
 }, Process))
 
 function Process.new(Interval: number, Run: () -> ()): Process
