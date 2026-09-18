@@ -1,9 +1,11 @@
--- load modules
-local HumanoidStateModule = require(script.Parent:WaitForChild("HumanoidStateModule"))
-
 -- load services
 local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+
+-- load modules
+local HumanoidStateModule = require(script.Parent:WaitForChild("HumanoidStateModule"))
+
 
 -- global references
 local OverlapParams = OverlapParams.new()
