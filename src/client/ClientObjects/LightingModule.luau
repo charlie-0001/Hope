@@ -1,6 +1,6 @@
 -- load services
 local TweenService = game:GetService("TweenService")
-t
+
 
 local Lighting = game:GetService("Lighting")
 local ColorCorrection = Lighting:WaitForChild("ColorCorrection")
