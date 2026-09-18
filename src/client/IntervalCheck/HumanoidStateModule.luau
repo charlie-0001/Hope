@@ -16,7 +16,7 @@ HumanoidState.Run = function()
     if not Humanoid then return end
     HumanoidState.Humanoid = Humanoid
 
-    local HumanoidRootPart = Humanoid.RootPart
+    local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
     if not HumanoidRootPart then return end
     HumanoidState.HumanoidRootPart = HumanoidRootPart
 end
