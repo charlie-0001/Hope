@@ -2,6 +2,7 @@
 local CollisionCheckModule = require(script.Parent:WaitForChild("IntervalCheck"):WaitForChild("CollisionCheckModule"))
 local HumanoidStateModule = require(script.Parent:WaitForChild("IntervalCheck"):WaitForChild("HumanoidStateModule"))
 local KillBrickModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("KillBrickModule"))
+local LightingModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("LightingModule"))
 
 
 -- custom touch event
@@ -11,35 +12,39 @@ local CustomTouchEndedEvent: BindableEvent = ReplicatedStorage:WaitForChild("Cus
 
 -- dictionaries for touch events
 local TouchActions = {
-    ["KillBrick"] = function(part, humanoid) KillBrickModule.Kill(part, humanoid) end
+    ["KillBrick"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end,
+    ["LightingChanger"] = function(Part) LightingModule.ChangeLighting(Part) end,
+    ["ColorCorrectionChanger"] = function(Part) LightingModule.ChangeColorCorrection(Part) end,
+    ["AtmosphereChanger"] = function(Part) LightingModule.ChangeAtmosphere(Part) end,
+    ["DepthOfFieldChanger"] = function(Part) LightingModule.ChangeDepthOfField(Part) end
 }
 
 local TouchEndedActions = {
-    ["TestPart"] = function(part, humanoid) KillBrickModule.Kill(part, humanoid) end
+    ["TestPart"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end
 }
 
 CustomTouchEvent.Event:Connect(function()
-    for _, part: BasePart in CollisionCheckModule.PartsInPlayer do
-        if not part:HasTag("TouchTrigger") then continue end
+    for _, Part: BasePart in CollisionCheckModule.PartsInPlayer do
+        if not Part:HasTag("TouchTrigger") then continue end
 
-        local Tags = part:GetTags()
+        local Tags = Part:GetTags()
         for _, Tag in Tags do
             local Action = TouchActions[Tag]
             if Action then 
-                task.spawn(Action, part, HumanoidStateModule.Humanoid)
+                task.spawn(Action, Part, HumanoidStateModule.Humanoid)
             end
         end
     end
 end)
 
-CustomTouchEndedEvent.Event:Connect(function(part: BasePart)
-    if not part:HasTag("TouchTrigger") then return end
+CustomTouchEndedEvent.Event:Connect(function(Part: BasePart)
+    if not Part:HasTag("TouchTrigger") then return end
 
-    local Tags = part:GetTags()
+    local Tags = Part:GetTags()
     for _, Tag in Tags do
         local Action = TouchEndedActions[Tag]
         if Action then 
-            task.spawn(Action, part, HumanoidStateModule.Humanoid)
+            task.spawn(Action, Part, HumanoidStateModule.Humanoid)
         end
     end
 end)
