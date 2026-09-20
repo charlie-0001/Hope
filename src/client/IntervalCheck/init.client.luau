@@ -4,41 +4,45 @@ local RunService = game:GetService("RunService")
 
 -- load modules
 local TurretModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("TurretModule"))
-local Process = require(script:WaitForChild("ClientManagerModule"))
+local ProcessModule = require(script:WaitForChild("ProcessModule"))
 local HumanoidStateModule = require(script:WaitForChild("HumanoidStateModule"))
 local CollisionCheckModule = require(script:WaitForChild("CollisionCheckModule"))
-
--- table for processes
-local Processes = {} :: { Process.Process }
+local InputModule = require(script.Parent:WaitForChild("Input"):WaitForChild("InputModule"))
 
 
 -- load all processes and add them to a table
-local HumanoidStateProcess = Process.new(
+local HumanoidStateProcess = ProcessModule.new(
     HumanoidStateModule.Interval, 
     HumanoidStateModule.Run
 )
-table.insert(Processes, HumanoidStateProcess)
+ProcessModule.InsertProcess(HumanoidStateProcess)
 
-local CollisionCheckProcess = Process.new(
+local CollisionCheckProcess = ProcessModule.new(
     CollisionCheckModule.Interval,
     CollisionCheckModule.Run
 )
-table.insert(Processes, CollisionCheckProcess)
+ProcessModule.InsertProcess(CollisionCheckProcess)
 
-local TurretProcess = Process.new(
+local TurretProcess = ProcessModule.new(
     TurretModule.Interval,
     TurretModule.Run
 )
-table.insert(Processes, TurretProcess)
+ProcessModule.InsertProcess(TurretProcess)
 
+local InputProcess = ProcessModule.new(
+    InputModule.Interval,
+    InputModule.Run
+)
+ProcessModule.InsertProcess(InputProcess)
 -- end process loading here
 
-RunService.RenderStepped:Connect(function (DeltaTime: number)
-    for _, process in ipairs(Processes) do
-        process.LastRun += DeltaTime
-        if process.LastRun >= process.Interval then
-            process.Run(DeltaTime)
-            process.LastRun = 0
+
+RunService.Heartbeat:Connect(function (DeltaTime: number)
+    for _, Process in ipairs(ProcessModule.Processes) do
+        Process.LastRun += DeltaTime
+        if Process.LastRun >= Process.Interval then
+            Process.Run(DeltaTime)
+            Process.LastRun = 0
         end
     end
 end)
