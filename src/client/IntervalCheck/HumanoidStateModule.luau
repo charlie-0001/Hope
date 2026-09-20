@@ -1,14 +1,17 @@
+local Player = game:GetService("Players").LocalPlayer
+
+
 HumanoidState = {}
 
 HumanoidState.Interval = 0
-HumanoidState.HumanoidRootPart = nil
-HumanoidState.Humanoid = nil
-HumanoidState.Character = nil
+
+HumanoidState.Character = Player.Character or Player.CharacterAdded:Wait() :: Instance
+HumanoidState.Humanoid = HumanoidState.Character:WaitForChild("Humanoid") :: Humanoid
+HumanoidState.HumanoidRootPart = HumanoidState.Character:WaitForChild("HumanoidRootPart") :: BasePart
+HumanoidState.Inert = false
 
 HumanoidState.Run = function()
-    local Player = game:GetService("Players").LocalPlayer
-
-    local Character = Player.Character
+    local Character = Player.Character or Player.CharacterAdded:Wait()
     if not Character then return end
     HumanoidState.Character = Character
 

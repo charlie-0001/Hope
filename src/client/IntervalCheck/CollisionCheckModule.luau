@@ -24,6 +24,8 @@ CollisionCheck.Interval = 0.1
 CollisionCheck.PartsInPlayer = {} :: {Instance}
 
 CollisionCheck.Run = function()
+    if HumanoidStateModule.Inert then return end
+
     OverlapParams.ExcludeInstances = {HumanoidStateModule.Character}
 
     local CharacterCFrame, CharacterSize = HumanoidStateModule.Character:GetBoundingBox()
