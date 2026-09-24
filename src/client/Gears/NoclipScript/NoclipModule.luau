@@ -24,13 +24,11 @@ NoclipModule.Right = {Enum.KeyCode.D}
 NoclipModule.Backward = {Enum.KeyCode.S}
 NoclipModule.Up = {Enum.KeyCode.Space}
 
-NoclipModule.Speed = 75
+NoclipModule.Speed = 70
 
 NoclipModule.Interval = 0
 
 NoclipModule.Run = function(DeltaTime: number)
-    print(InputModule.HeldInputs)
-
     local MoveVector = Vector3.zero
     local Count = 0
 
@@ -55,9 +53,11 @@ NoclipModule.BindKeys = function()
         function(ActionName, InputState, InputObject)
             if ActionName == NOCLIP_SPEED_UP and InputState == Enum.UserInputState.Begin then
                 if NoclipModule.Speed < 300 then
-                    NoclipModule.Speed += 5
+                    NoclipModule.Speed += 10
                 end
             end
+
+            return Enum.ContextActionResult.Pass
         end,
         false,
         table.unpack(NoclipModule.NoclipSpeedUp)
@@ -68,9 +68,11 @@ NoclipModule.BindKeys = function()
         function(ActionName, InputState, InputObject)
             if ActionName == NOCLIP_SPEED_DOWN and InputState == Enum.UserInputState.Begin then
                 if NoclipModule.Speed > 10 then
-                    NoclipModule.Speed -= 5
+                    NoclipModule.Speed -= 10
                 end
             end
+
+            return Enum.ContextActionResult.Pass
         end,
         false,
         table.unpack(NoclipModule.NoclipSpeedDown)
