@@ -5,35 +5,25 @@ optimization and not just me overcomplicating this.
 ]]
 
 -- load services
-local UserInputService = game:GetService("UserInputService")
+local ContextActionService = game:GetService("ContextActionService")
 
 
 -- load modules
 local InputModule = require(script:WaitForChild("InputModule"))
 
 
-UserInputService.InputBegan:Connect(function(Input: InputObject)
-    if Input.UserInputType == Enum.UserInputType.Keyboard then
-        table.insert(InputModule.HeldInputs, Input.KeyCode)
-        -- add stuff for JustPressedInputs later
-    elseif Input.UserInputType == Enum.UserInputType.MouseButton1 then
-        table.insert(InputModule.HeldInputs, Enum.UserInputType.MouseButton1)
-    end
-end)
+local function HandleInput(ActionName, InputState, InputObject: InputObject)
+    local InputObjectType 
+    if InputObject.UserInputType == Enum.UserInputType.Keyboard then InputObjectType = InputObject.KeyCode
+    elseif InputObject.UserInputType == Enum.UserInputType.MouseButton1 then InputObjectType = InputObject.UserInputType end
 
-UserInputService.InputEnded:Connect(function(Input)
-    local valueToRemove = nil
-    
-    if Input.UserInputType == Enum.UserInputType.Keyboard then
-        valueToRemove = Input.KeyCode
-    elseif Input.UserInputType == Enum.UserInputType.MouseButton1 then
-        valueToRemove = Enum.UserInputType.MouseButton1
+    if InputState == Enum.UserInputState.Begin then
+        InputModule.AddInput(InputObjectType)
+    elseif InputState == Enum.UserInputState.End then
+        InputModule.RemoveInput(InputObjectType)
     end
-    
-    if valueToRemove then
-        local index = table.find(InputModule.HeldInputs, valueToRemove)
-        if index then
-            table.remove(InputModule.HeldInputs, index)
-        end
-    end
-end)
+
+    return Enum.ContextActionResult.Pass
+end
+
+ContextActionService:BindAction("AllInputs", HandleInput, false, table.unpack(Enum.UserInputType:GetEnumItems()))
