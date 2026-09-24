@@ -16,12 +16,12 @@ local Invulnerable = false
 GodModeTool.Activated:Connect(function()
     Invulnerable = not Invulnerable
 
-    if not Invulnerable then 
-        HumanoidStateModule.Humanoid.MaxHealth = 100
-        GodModeTool.Name = "GodMode (off)"
-    else
+    if Invulnerable then 
         HumanoidStateModule.Humanoid.MaxHealth = math.huge
         HumanoidStateModule.Humanoid.Health = math.huge
         GodModeTool.Name = "GodMode (on)"
+    else
+        HumanoidStateModule.Humanoid.MaxHealth = 100
+        GodModeTool.Name = "GodMode (off)"
     end
 end)
