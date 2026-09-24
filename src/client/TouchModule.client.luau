@@ -3,6 +3,7 @@ local CollisionCheckModule = require(script.Parent:WaitForChild("IntervalCheck")
 local HumanoidStateModule = require(script.Parent:WaitForChild("IntervalCheck"):WaitForChild("HumanoidStateModule"))
 local KillBrickModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("KillBrickModule"))
 local LightingModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("LightingModule"))
+local MusicZoneModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("MusicZoneModule"))
 
 
 -- custom touch event
@@ -16,7 +17,8 @@ local TouchActions = {
     ["LightingChanger"] = function(Part) LightingModule.ChangeLighting(Part) end,
     ["ColorCorrectionChanger"] = function(Part) LightingModule.ChangeColorCorrection(Part) end,
     ["AtmosphereChanger"] = function(Part) LightingModule.ChangeAtmosphere(Part) end,
-    ["DepthOfFieldChanger"] = function(Part) LightingModule.ChangeDepthOfField(Part) end
+    ["DepthOfFieldChanger"] = function(Part) LightingModule.ChangeDepthOfField(Part) end,
+    ["MusicZoneModule"] = function(Part) MusicZoneModule.ChangeMusic(Part) end
 }
 
 local TouchEndedActions = {
