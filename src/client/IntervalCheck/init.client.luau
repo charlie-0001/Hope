@@ -8,6 +8,7 @@ local ProcessModule = require(script:WaitForChild("ProcessModule"))
 local HumanoidStateModule = require(script:WaitForChild("HumanoidStateModule"))
 local CollisionCheckModule = require(script:WaitForChild("CollisionCheckModule"))
 local InputModule = require(script.Parent:WaitForChild("Input"):WaitForChild("InputModule"))
+local PulsePartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("PulsePartModule"))
 
 
 -- load all processes and add them to a table
@@ -34,6 +35,12 @@ local InputProcess = ProcessModule.new(
     InputModule.Run
 )
 ProcessModule.InsertProcess(InputProcess)
+
+local PulsePartProcess = ProcessModule.new(
+    PulsePartModule.Interval,
+    PulsePartModule.Run
+)
+ProcessModule.InsertProcess(PulsePartProcess)
 -- end process loading here
 
 
