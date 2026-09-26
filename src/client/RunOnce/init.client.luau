@@ -5,6 +5,7 @@ local CollectionService = game:GetService("CollectionService")
 -- load modules
 local TurretModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("TurretModule"))
 local MusicZoneModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("MusicZoneModule"))
+local PulsePartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("PulsePartModule"))
 local StudioOnlyModule = require(script:WaitForChild("StudioOnlyModule"))
 
 
@@ -32,7 +33,8 @@ StudioOnlyModule.HideParts()
 -- client object initialization
 local InitializeActions = {
     ["TurretSpawner"] = function(TurretPart: BasePart) TurretModule.InitializeTurret(TurretPart) end,
-    ["GlobalSound"] = function(Sound: Sound) MusicZoneModule.LoadMusic(Sound) end
+    ["GlobalSound"] = function(Sound: Sound) MusicZoneModule.LoadMusic(Sound) end,
+    ["PulsePart"] = function(PulsePart: BasePart) PulsePartModule.InitializePart(PulsePart) end
 }
 
 for TagName, Action in pairs(InitializeActions) do
