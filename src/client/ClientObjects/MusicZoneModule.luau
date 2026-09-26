@@ -1,8 +1,17 @@
+-- load services
 local TweenService = game:GetService("TweenService")
 local SoundService = game:GetService("SoundService")
+local Players = game:GetService("Players")
+local MarketplaceService = game:GetService("MarketplaceService")
+
+
+local PlayerGUI = Players.LocalPlayer:WaitForChild("PlayerGui")
+local MusicGUI = PlayerGUI:WaitForChild("MusicGUI")
+local TextLabel: TextLabel = MusicGUI:WaitForChild("TextLabel")
 
 local CurrentZone: BasePart? = nil
 local ActiveTweens = {}
+
 
 local MusicZoneModule = {}
 MusicZoneModule.CurrentSong = nil :: Sound?
@@ -16,6 +25,17 @@ MusicZoneModule.ChangeMusic = function(Part: BasePart)
 
     local Sound: Sound = SoundService:FindFirstChild(OriginalSound.Name)
     if not Sound then return end
+
+    local StringID = string.match(Sound.SoundId, "%d+")
+    local AssetID = tonumber(StringID)
+
+    local Success, MarketSound = pcall(function(...)
+        return MarketplaceService:GetProductInfoAsync(AssetID)
+    end)
+
+    if Success then
+        TextLabel.Text = MarketSound.Name
+    end 
 
     MusicZoneModule.CurrentSong = Sound
 
