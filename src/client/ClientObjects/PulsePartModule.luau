@@ -5,7 +5,7 @@ local DistanceCheckModule = require(script.Parent.Parent:WaitForChild("DistanceC
 
 local PulseParts = {}
 local AverageLoudness = 0
-local SmoothingFactor = 0.05
+local SmoothingFactor = 0.025
 
 
 MusicPulsePart = {}
