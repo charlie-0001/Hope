@@ -21,6 +21,9 @@ local NoclipProcess = ProcessModule.new(
 NoclipTool.Equipped:Connect(function()
     HumanoidStateModule.HumanoidRootPart.Anchored = true
     HumanoidStateModule.Inert = true
+    HumanoidStateModule.HumanoidRootPart.AssemblyLinearVelocity = Vector3.zero
+    HumanoidStateModule.HumanoidRootPart.AssemblyAngularVelocity = Vector3.zero
+
     ProcessModule.InsertProcess(NoclipProcess)
     NoclipModule.BindKeys()
 end)
@@ -28,6 +31,9 @@ end)
 NoclipTool.Unequipped:Connect(function()
     HumanoidStateModule.HumanoidRootPart.Anchored = false
     HumanoidStateModule.Inert = false
+
+    HumanoidStateModule.Humanoid:ChangeState(Enum.HumanoidStateType.GettingUp) -- removes possibility of ragdolling from noclip
+
     ProcessModule.RemoveProcess(NoclipProcess)
     NoclipModule.UnbindKeys()
 end)
