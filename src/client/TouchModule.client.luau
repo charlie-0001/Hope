@@ -18,11 +18,12 @@ local TouchActions = {
     ["ColorCorrectionChanger"] = function(Part) LightingModule.ChangeColorCorrection(Part) end,
     ["AtmosphereChanger"] = function(Part) LightingModule.ChangeAtmosphere(Part) end,
     ["DepthOfFieldChanger"] = function(Part) LightingModule.ChangeDepthOfField(Part) end,
-    ["MusicZoneModule"] = function(Part) MusicZoneModule.ChangeMusic(Part) end
+    ["MusicZone"] = function(Part) MusicZoneModule.ChangeMusic(Part) end
 }
 
 local TouchEndedActions = {
-    ["TestPart"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end
+    ["TestPart"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end,
+    ["MusicZone"] = function(Part) MusicZoneModule.ExitedZone(Part) end
 }
 
 CustomTouchEvent.Event:Connect(function()
