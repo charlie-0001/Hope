@@ -16,29 +16,49 @@ local CustomTouchEndedEvent: BindableEvent = ReplicatedStorage:WaitForChild("Cus
 -- touch ended
 local OldPartsInPlayer = {} :: {Instance}
 
+local CurrentPartsMap = {} :: {Instance}
+local CurrentPartsList = {} :: {Instance}
 
 -- module
 local CollisionCheck = {}
 
-CollisionCheck.Interval = 0.1
+CollisionCheck.Interval = 0
+CollisionCheck.Type = "RenderStepped"
+
 CollisionCheck.PartsInPlayer = {} :: {Instance}
 
 CollisionCheck.Run = function()
     if HumanoidStateModule.Inert then return end
 
-    OverlapParams.ExcludeInstances = {HumanoidStateModule.Character}
+    OverlapParams.FilterDescendantsInstances = {HumanoidStateModule.Character}
 
-    local CharacterCFrame, CharacterSize = HumanoidStateModule.Character:GetBoundingBox()
-    CollisionCheck.PartsInPlayer = Workspace:GetPartBoundsInBox(CharacterCFrame, CharacterSize, OverlapParams)
+    table.clear(CurrentPartsList)
+    table.clear(CurrentPartsMap)
 
-    for _, part: BasePart in OldPartsInPlayer do
-        if not table.find(CollisionCheck.PartsInPlayer, part) then
-            CustomTouchEndedEvent:Fire(part)
-        end
-    end
-    
-    OldPartsInPlayer = CollisionCheck.PartsInPlayer
-    CustomTouchEvent:Fire()
+    for _, Child in HumanoidStateModule.Character:GetChildren() do
+		if Child:IsA("BasePart") then
+			local Parts = Workspace:GetPartsInPart(Child, OverlapParams)
+			for i = 1, #Parts do
+				local Part = Parts[i]
+				if not CurrentPartsMap[Part] then
+					CurrentPartsMap[Part] = true
+					table.insert(CurrentPartsList, Part)
+				end
+			end
+		end
+	end
+
+	for i = 1, #OldPartsInPlayer do
+		local OldPart = OldPartsInPlayer[i]
+		if not CurrentPartsMap[OldPart] then
+			CustomTouchEndedEvent:Fire(OldPart)
+		end
+	end
+
+	OldPartsInPlayer = table.clone(CurrentPartsList)
+	CollisionCheck.PartsInPlayer = CurrentPartsList
+
+	CustomTouchEvent:Fire()
 end
 
 return CollisionCheck
