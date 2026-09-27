@@ -3,7 +3,7 @@ local ContextActionService = game:GetService("ContextActionService")
 
 
 -- load modules
-local InputModule = require(script.Parent.Parent.Parent:WaitForChild("Input"):WaitForChild("InputModule"))
+local InputModule = require(script.Parent.Parent.Parent:WaitForChild("InputScript"):WaitForChild("InputModule"))
 local HumanoidStateModule = require(script.Parent.Parent.Parent:WaitForChild("IntervalCheck"):WaitForChild("HumanoidStateModule"))
 
 
@@ -27,6 +27,7 @@ NoclipModule.Up = {Enum.KeyCode.Space}
 NoclipModule.Speed = 70
 
 NoclipModule.Interval = 0
+NoclipModule.Type = "Heartbeat"
 
 NoclipModule.Run = function(DeltaTime: number)
     local MoveVector = Vector3.zero

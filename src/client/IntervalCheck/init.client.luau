@@ -7,45 +7,60 @@ local TurretModule = require(script.Parent:WaitForChild("ClientObjects"):WaitFor
 local ProcessModule = require(script:WaitForChild("ProcessModule"))
 local HumanoidStateModule = require(script:WaitForChild("HumanoidStateModule"))
 local CollisionCheckModule = require(script:WaitForChild("CollisionCheckModule"))
-local InputModule = require(script.Parent:WaitForChild("Input"):WaitForChild("InputModule"))
+local InputModule = require(script.Parent:WaitForChild("InputScript"):WaitForChild("InputModule"))
 local PulsePartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("PulsePartModule"))
 
 
 -- load all processes and add them to a table
 local HumanoidStateProcess = ProcessModule.new(
     HumanoidStateModule.Interval, 
-    HumanoidStateModule.Run
+    HumanoidStateModule.Run,
+    HumanoidStateModule.Type
 )
 ProcessModule.InsertProcess(HumanoidStateProcess)
 
 local CollisionCheckProcess = ProcessModule.new(
     CollisionCheckModule.Interval,
-    CollisionCheckModule.Run
+    CollisionCheckModule.Run,
+    CollisionCheckModule.Type
 )
 ProcessModule.InsertProcess(CollisionCheckProcess)
 
 local TurretProcess = ProcessModule.new(
     TurretModule.Interval,
-    TurretModule.Run
+    TurretModule.Run,
+    TurretModule.Type
 )
 ProcessModule.InsertProcess(TurretProcess)
 
 local InputProcess = ProcessModule.new(
     InputModule.Interval,
-    InputModule.Run
+    InputModule.Run,
+    InputModule.Type
 )
 ProcessModule.InsertProcess(InputProcess)
 
 local PulsePartProcess = ProcessModule.new(
     PulsePartModule.Interval,
-    PulsePartModule.Run
+    PulsePartModule.Run,
+    PulsePartModule.Type
 )
 ProcessModule.InsertProcess(PulsePartProcess)
 -- end process loading here
 
 
+RunService.RenderStepped:Connect(function (DeltaTime: number)
+    for _, Process in ipairs(ProcessModule.RenderSteppedProcesses) do
+        Process.LastRun += DeltaTime
+        if Process.LastRun >= Process.Interval then
+            Process.Run(DeltaTime)
+            Process.LastRun = 0
+        end
+    end
+end)
+
 RunService.Heartbeat:Connect(function (DeltaTime: number)
-    for _, Process in ipairs(ProcessModule.Processes) do
+    for _, Process in ipairs(ProcessModule.HeartbeatProcesses) do
         Process.LastRun += DeltaTime
         if Process.LastRun >= Process.Interval then
             Process.Run(DeltaTime)

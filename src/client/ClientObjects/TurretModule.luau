@@ -43,6 +43,7 @@ end
 TurretModule = {}
 
 TurretModule.Interval = 0
+TurretModule.Type = "RenderStepped"
 
 TurretModule.InitializeTurret = function(TurretSpawner: BasePart)
     local Model = TurretSpawner:FindFirstAncestor("TurretGroup")

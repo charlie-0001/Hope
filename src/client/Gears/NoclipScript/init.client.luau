@@ -15,7 +15,8 @@ local NoclipTool: Tool = Backpack:WaitForChild("Noclip", 5) or HumanoidStateModu
 
 local NoclipProcess = ProcessModule.new(
         NoclipModule.Interval, 
-        NoclipModule.Run
+        NoclipModule.Run,
+        NoclipModule.Type
     )
 
 NoclipTool.Equipped:Connect(function()

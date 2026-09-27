@@ -4,6 +4,7 @@ local Player = game:GetService("Players").LocalPlayer
 HumanoidState = {}
 
 HumanoidState.Interval = 0
+HumanoidState.Type = "Renderstepped"
 
 HumanoidState.Character = Player.Character or Player.CharacterAdded:Wait() :: Instance
 HumanoidState.Humanoid = HumanoidState.Character:WaitForChild("Humanoid") :: Humanoid

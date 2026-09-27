@@ -11,6 +11,7 @@ local SmoothingFactor = 0.025
 MusicPulsePart = {}
 
 MusicPulsePart.Interval = 0
+MusicPulsePart.Type = "RenderStepped"
 
 MusicPulsePart.Run = function(DeltaTime: number)
     local PlaybackLoudness
