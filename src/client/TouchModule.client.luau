@@ -4,6 +4,8 @@ local HumanoidStateModule = require(script.Parent:WaitForChild("IntervalCheck"):
 local KillBrickModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("KillBrickModule"))
 local LightingModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("LightingModule"))
 local MusicZoneModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("MusicZoneModule"))
+local FlipModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("FlipModule"))
+local FallingPartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("FallingPlatformModule"))
 
 
 -- custom touch event
@@ -18,12 +20,14 @@ local TouchActions = {
     ["ColorCorrectionChanger"] = function(Part) LightingModule.ChangeColorCorrection(Part) end,
     ["AtmosphereChanger"] = function(Part) LightingModule.ChangeAtmosphere(Part) end,
     ["DepthOfFieldChanger"] = function(Part) LightingModule.ChangeDepthOfField(Part) end,
-    ["MusicZone"] = function(Part) MusicZoneModule.ChangeMusic(Part) end
+    ["MusicZone"] = function(Part) MusicZoneModule.ChangeMusic(Part) end,
+    ["Flip"] = function(Part) FlipModule.Update(Part) end,
+    ["FallingPart"] = function(Part) FallingPartModule.Fall(Part) end
 }
 
 local TouchEndedActions = {
-    ["TestPart"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end,
-    ["MusicZone"] = function(Part) MusicZoneModule.ExitedZone(Part) end
+    ["MusicZone"] = function(Part) MusicZoneModule.ExitedZone(Part) end,
+    ["Flip"] = function(Part) FlipModule.DestroyGhostCharacter(Part) end
 }
 
 CustomTouchEvent.Event:Connect(function()
