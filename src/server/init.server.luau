@@ -4,10 +4,14 @@ local PhysicsService = game:GetService("PhysicsService")
 PhysicsService:CollisionGroupSetCollidable("Players", "Players", false)
 
 local function SetCollisionGroup(Character)
-	task.wait()
 	for _, Part in pairs(Character:GetDescendants()) do
 		if Part:IsA("BasePart") then
 			Part.CollisionGroup = "Players"
+		else
+			if Part:IsA("Accessory") then
+				Part.CanTouch = false
+				Part.CanQuery = false
+			end
 		end
 	end
 end
