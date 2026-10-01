@@ -1,10 +1,10 @@
 -- load services
 local TweenService = game:GetService("TweenService")
 local CollectionService = game:GetService("CollectionService")
-local PartyEmulatorService = game:GetService("PartyEmulatorService")
+local SoundService = game:GetService("SoundService")
 
 
-local Sound: Sound = script:FindFirstChildOfClass("Sound")
+local Sound: Sound = SoundService:FindFirstChild("FallingPlatformSound")
 
 
 FallingPlatformModule = {}
