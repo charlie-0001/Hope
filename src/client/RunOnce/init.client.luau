@@ -10,14 +10,14 @@ local FallingPlatformModule = require(script.Parent:WaitForChild("ClientObjects"
 local StudioOnlyModule = require(script:WaitForChild("StudioOnlyModule"))
 
 
-local function InitializeInstance(instance: Instance)
-    if not instance:HasTag("Initialize") then return end
+local function InitializeInstance(Instance: Instance)
+    if not Instance:HasTag("Initialize") then return end
 
-    local Clone = instance:Clone()
+    local Clone = Instance:Clone()
     Clone:RemoveTag("Initialize")
-    Clone.Parent = instance.Parent
+    Clone.Parent = Instance.Parent
 
-    instance:Destroy()
+    Instance:Destroy()
     print("Initialized new client object.")
 end
 
@@ -50,3 +50,5 @@ for TagName, Action in pairs(InitializeActions) do
         task.spawn(Action, Instance)
     end)
 end
+
+-- alignment keys
