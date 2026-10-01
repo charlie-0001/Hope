@@ -4,13 +4,15 @@ local DistanceCheckModule = require(script.Parent.Parent:WaitForChild("DistanceC
 
 
 local PulseParts = {}
+local CurrentTransparency = {}
+
 local AverageLoudness = 0
-local SmoothingFactor = 0.025
+local SmoothingFactor = 0.005
 
 
 MusicPulsePart = {}
 
-MusicPulsePart.Interval = 0
+MusicPulsePart.Interval = 0.05
 MusicPulsePart.Type = "RenderStepped"
 
 MusicPulsePart.Run = function(DeltaTime: number)
@@ -27,7 +29,11 @@ MusicPulsePart.Run = function(DeltaTime: number)
 	end
 
     for _, Part: BasePart in ipairs(PulseParts) do
-        if not DistanceCheckModule.DistanceCheck(Part, 150) then continue end
+        local DistanceCheck = Part:GetAttribute("DistanceCheck")
+        if DistanceCheck == true then 
+            local DistanceCheckLength = Part:GetAttribute("DistanceCheckLength") or 150
+            if not DistanceCheckModule.DistanceCheck(Part, DistanceCheckLength) then continue end
+        end
         MusicPulsePart.Pulse(Part, PlaybackLoudness)
     end
 end
@@ -38,8 +44,14 @@ MusicPulsePart.Pulse = function(Part: BasePart, PlaybackLoudness: number)
     return end
 
     local Ratio = PlaybackLoudness / AverageLoudness
-    local TargetTransparency = 0.8 - (Ratio * 0.3)
-    Part.Transparency = math.clamp(TargetTransparency, 0.2, 0.8)
+    local TargetTransparency = 0.75 - ((Ratio - 1) * 0.2)
+    TargetTransparency = math.clamp(TargetTransparency, 0, 0.9)
+
+    local Current = CurrentTransparency[Part] or Part.Transparency
+    local NewTransparency = Current + (TargetTransparency - Current) * 0.25
+
+    CurrentTransparency[Part] = NewTransparency
+    Part.Transparency = NewTransparency
 end
 
 MusicPulsePart.InitializePart = function(Part: BasePart)
