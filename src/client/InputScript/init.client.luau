@@ -6,11 +6,23 @@ local UserInputService = game:GetService("UserInputService")
 local InputModule = require(script:WaitForChild("InputModule"))
 
 
+local Camera: Camera = workspace.CurrentCamera
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.EmotesMenu, false) -- disable emote wheel bc useless
+
+
 local function OnInputBegan(Input, GameProcessed)
     local InputType = Input.UserInputType
 
     if InputType == Enum.UserInputType.Keyboard then
         InputModule.AddInput(Input.KeyCode)
+
+        -- alignment keys
+        if Input.KeyCode == Enum.KeyCode.Comma then
+            Camera.CFrame = Camera.CFrame * CFrame.Angles(0, math.rad(45), 0)
+        elseif Input.KeyCode == Enum.KeyCode.Period then
+            Camera.CFrame = Camera.CFrame * CFrame.Angles(0, math.rad(-45), 0)
+        end
+
     elseif InputType == Enum.UserInputType.MouseButton1 then
         InputModule.AddInput(InputType)
     elseif InputType == Enum.UserInputType.Touch then
