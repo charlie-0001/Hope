@@ -9,6 +9,7 @@ local HumanoidStateModule = require(script:WaitForChild("HumanoidStateModule"))
 local CollisionCheckModule = require(script:WaitForChild("CollisionCheckModule"))
 local InputModule = require(script.Parent:WaitForChild("InputScript"):WaitForChild("InputModule"))
 local PulsePartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("PulsePartModule"))
+local StatsModule = require(script:WaitForChild("StatsModule"))
 
 
 -- load all processes and add them to a table
@@ -46,6 +47,13 @@ local PulsePartProcess = ProcessModule.new(
     PulsePartModule.Type
 )
 ProcessModule.InsertProcess(PulsePartProcess)
+
+local StatsModuleProcess = ProcessModule.new(
+    StatsModule.Interval,
+    StatsModule.Run,
+    StatsModule.Type
+)
+ProcessModule.InsertProcess(StatsModuleProcess) -- comment this out when stats are unneeded
 -- end process loading here
 
 
