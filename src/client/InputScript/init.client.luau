@@ -18,9 +18,9 @@ local function OnInputBegan(Input, GameProcessed)
 
         -- alignment keys
         if Input.KeyCode == Enum.KeyCode.Comma then
-            Camera.CFrame = Camera.CFrame * CFrame.Angles(0, math.rad(45), 0)
+            Camera.CFrame = CFrame.Angles(0, math.rad(45), 0) * Camera.CFrame
         elseif Input.KeyCode == Enum.KeyCode.Period then
-            Camera.CFrame = Camera.CFrame * CFrame.Angles(0, math.rad(-45), 0)
+            Camera.CFrame =  CFrame.Angles(0, math.rad(-45), 0) * Camera.CFrame
         end
 
     elseif InputType == Enum.UserInputType.MouseButton1 then
