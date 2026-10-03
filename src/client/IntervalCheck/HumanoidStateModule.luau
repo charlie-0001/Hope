@@ -6,7 +6,7 @@ HumanoidState = {}
 HumanoidState.Interval = 0
 HumanoidState.Type = "Renderstepped"
 
-HumanoidState.Character = Player.Character or Player.CharacterAdded:Wait() :: Instance
+HumanoidState.Character = Player.Character or Player.CharacterAdded:Wait() :: Model
 HumanoidState.Humanoid = HumanoidState.Character:WaitForChild("Humanoid") :: Humanoid
 HumanoidState.HumanoidRootPart = HumanoidState.Character:WaitForChild("HumanoidRootPart") :: BasePart
 HumanoidState.Inert = false
@@ -23,6 +23,10 @@ HumanoidState.Run = function()
     local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
     if not HumanoidRootPart then return end
     HumanoidState.HumanoidRootPart = HumanoidRootPart
+
+    local Head: BasePart = Character:FindFirstChild("Head")
+    if not Head then return end
+    Head.CanCollide = true -- prevents head collision glitch
 end
 
 return HumanoidState
