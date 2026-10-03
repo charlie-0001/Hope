@@ -50,5 +50,3 @@ for TagName, Action in pairs(InitializeActions) do
         task.spawn(Action, Instance)
     end)
 end
-
--- alignment keys
