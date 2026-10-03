@@ -9,3 +9,8 @@ For any onlookers curious about the progress of this codebase, I will try to pus
 
 # Goal
 The goal of this project is to improve my programming skills while doing something I love, game development. I hope for this project to serve as an outlet of self expression and something I can look back on proudly when it's done. Additionally, I want this codebase to be something I can use and add to long term for future Roblox related projects.
+
+# Links
+https://www.roblox.com/games/88841654506316/Sunrise
+
+I do not claim ownership any of the music and sound effects placed in this game.
