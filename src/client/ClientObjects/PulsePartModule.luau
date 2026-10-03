@@ -21,12 +21,15 @@ MusicPulsePart.Run = function(DeltaTime: number)
         PlaybackLoudness = MusicZoneModule.CurrentSong.PlaybackLoudness
     else return end
 
-    if AverageLoudness == 0 then
-		AverageLoudness = PlaybackLoudness
-	else
-		-- exponential moving average formula
-		AverageLoudness = AverageLoudness + (PlaybackLoudness - AverageLoudness) * SmoothingFactor
-	end
+    -- move the average loudness only at the start of the song. hopefully this makes the drop of songs more intense. 
+    if MusicZoneModule.CurrentSong.TimePosition <= 15 then
+        if AverageLoudness == 0 then
+            AverageLoudness = PlaybackLoudness
+        else
+            -- exponential moving average formula
+            AverageLoudness = AverageLoudness + (PlaybackLoudness - AverageLoudness) * SmoothingFactor
+        end
+    end
 
     for _, Part: BasePart in ipairs(PulseParts) do
         local DistanceCheck = Part:GetAttribute("DistanceCheck")
