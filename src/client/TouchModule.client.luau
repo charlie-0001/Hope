@@ -7,6 +7,8 @@ local MusicZoneModule = require(script.Parent:WaitForChild("ClientObjects"):Wait
 local FlipModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("FlipModule"))
 local FallingPartModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("FallingPlatformModule"))
 local BasicLauncherModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("BasicLauncherModule"))
+local CurveTeleporterModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("CurveTeleporterModule"))
+local BasicTeleporterModule = require(script.Parent:WaitForChild("ClientObjects"):WaitForChild("BasicTeleporterModule"))
 
 
 -- custom touch event
@@ -18,6 +20,8 @@ local CustomTouchEndedEvent: BindableEvent = ReplicatedStorage:WaitForChild("Cus
 local TouchActions = {
     ["KillBrick"] = function(Part, Humanoid) KillBrickModule.Kill(Part, Humanoid) end,
     ["BasicLauncher"] = function(Part, Humanoid) BasicLauncherModule.Launch(Part, Humanoid) end,
+    ["CurveTeleporter"] = function(Part, Humanoid) CurveTeleporterModule.Teleport(Part, Humanoid) end,
+    ["BasicTeleporter"] = function(Part, Humanoid) BasicTeleporterModule.Teleport(Part, Humanoid) end,
     ["LightingChanger"] = function(Part) LightingModule.ChangeLighting(Part) end,
     ["ColorCorrectionChanger"] = function(Part) LightingModule.ChangeColorCorrection(Part) end,
     ["AtmosphereChanger"] = function(Part) LightingModule.ChangeAtmosphere(Part) end,
