@@ -34,7 +34,7 @@ MusicZoneModule.ChangeMusic = function(Part: BasePart)
     end)
 
     if Success then
-        TextLabel.Text = MarketSound.Name
+        TextLabel.Text = MarketSound.Name .. " ♪"
     end 
 
     MusicZoneModule.CurrentSong = Sound
@@ -62,6 +62,8 @@ end
 MusicZoneModule.ExitedZone = function(Part: BasePart)
     if CurrentZone ~= Part then return end
     CurrentZone = nil
+
+    TextLabel.Text = "Nil ♪"
 
     local OriginalSound = Part:FindFirstChildOfClass("Sound")
     local Sound: Sound = SoundService:WaitForChild(OriginalSound.Name)
